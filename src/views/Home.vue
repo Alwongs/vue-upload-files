@@ -1,50 +1,50 @@
 <template>
-  <div class="home">
-    <div class="container">
-      <header class="header">
-        <h1>Загрузка файлов</h1>
-      </header>
-      <div class="btn-block">
-        <input 
-          type="file" 
-          name="file" 
-          multiple
-          @change="readImages"
-        >
-        <button class="upload">Загрузить</button>
-      </div>
-      <ul class="preview-block">
-        <li 
-          v-for="image in imageList" 
-          :key="image.url"
-          class="preview-item"
-        >
-          <img :src="image.url" alt="фотка">
-        </li>
-      </ul>
+    <div class="home">
+        <div class="container">
+            <header class="header">
+                <h1>Загрузка файлов</h1>
+            </header>
+            <div class="btn-block">
+                <input 
+                type="file" 
+                name="file" 
+                multiple
+                @change="readImages"
+                >
+                <button class="upload">Загрузить</button>
+            </div>
+            <ul class="preview-block">
+                <li 
+                v-for="image in imageList" 
+                :key="image.url"
+                class="preview-item"
+                >
+                <img :src="image.url" alt="фотка">
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Home',
-  data() {
-    return {
-      imageList: [],
-      files: []
-    }
-  },
-  components: {
+    name: 'Home',
+    data() {
+        return {
+            imageList: [],
+            files: []
+        }
+    },
+    components: {
 
-  },
-  methods: {
-    readImages(event) {
-      this.files = Array.from(event.target.files)      
-      console.log(this.files)
+    },
+    methods: {
+        readImages(event) {
+            this.files = Array.from(event.target.files)      
+            console.log(this.files)
+        }
     }
-  }
 }
 </script>
 
