@@ -9,52 +9,51 @@ import {
 
 export default {
     getters: {
-        postImageList(state) {
-            return state.postImageList;
+        previewImageList(state) {
+            return state.previewImageList
         },
-        isAbleUploadButton(state) {
-            return state.isAbleUploadButton
-        }
+        postImageList(state) {
+            return state.postImageList
+        },
     },
     state: {
+        previewImageList: [],
         postImageList: [],
-        isAbleUploadButton: true
     },
     mutations: {
+        UPDATE_PREVIEW_IMAGE_LIST(state, payload) {
+            state.previewImageList = payload
+        },
         UPDATE_POST_IMAGE_LIST(state, payload) {
             state.postImageList = payload
-        },
-        ENABLE_UPLOAD_BUTTON(state, payload) {
-            state.isAbleUploadButton = payload
         },
     },
     actions: {        
         uploadImages({commit}, files) {
-            commit('ENABLE_UPLOAD_BUTTON', false) 
-            const preview = document.querySelector('.preview-group')
+            const previewBlock = document.querySelector('.before-loaded-list')
             const storage = getStorage()
             let counter = 0
             let imageList = []
 
             files.forEach((file, index) => {
 
-                const progressBlock = preview.querySelectorAll('.preview-progress-info')[index]
+                const progressBar = previewBlock.querySelectorAll('.progress-bar')[index]
 
-                const storageRef = stRef(storage, `images/${file.name}`)
+                const storageRef = stRef(storage, `images-test/${file.name}`)
                 const uploadTask = uploadBytesResumable(storageRef, file)
                 
-                uploadTask.on('state_changed', 
-                (snapshot) => {
+                uploadTask.on('state_changed', (snapshot) => {
                     const progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
 
-                    progressBlock.style.width = progress + '%'
-                    progressBlock.textContent = progress + '%'
+                    progressBar.style.width = progress + '%'
+                    progressBar.textContent = progress + '%'
+
                     if (parseInt(progress) === 100) {
                         counter++
                     }
-
                     if (counter === files.length) {
                         console.log('images uploaded successfully!')
+
                     }
                 }, (error) => {
                     console.log(error)
@@ -75,12 +74,11 @@ export default {
                     })                   
                 }) 
 
-            })  
-        }, 
-        
+            }) 
+        },
         async deleteImages(_, imageName) {
             const storage = getStorage();  
-            const desertRef = stRef(storage, `images/${imageName}`);
+            const desertRef = stRef(storage, `images-test/${imageName}`);
             
             await deleteObject(desertRef).then(() => {
 
