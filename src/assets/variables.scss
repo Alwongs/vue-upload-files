@@ -1,0 +1,32 @@
+/* ---- screen sizes ---- */
+$desktop-max: 1439px;
+$desktop-min: 1024px;
+$tablet-max: 1023px;
+$tablet-min: 768px;
+$mobile-max: 767px;
+
+/* ---- colors ---- */
+$black: #121212;
+$grey: #999999;
+$white: #FFFFFF;
+$grey-light: #EEEEEE;
+$green: #0EC261;
+$green-dark: #039F67;
+$red: #7B0C3B;
+$red-dark: #493013;
+$blue: blue;
+$lilac: rgb(164, 102, 215);
+
+/* ---- background-colors ---- */
+$bg-footer-mobile: #151B1F;
+$bg-slide-filter: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #00000000 100%);
+$bg-slider-button-hover: rgba(130, 215, 102, 0.4);
+
+$bg-menu: rgba(113, 104, 171, 0.934);
+
+$bg-btn: linear-gradient(90deg, $green 2.61%, $green-dark 112.6%);
+
+/* ---- shadows ---- */
+$box-shadow-color: rgba(90, 97, 105, 0.12);
+
+$home-color: #FFFFFF;
