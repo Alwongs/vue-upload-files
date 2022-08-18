@@ -30,11 +30,11 @@
                         class="loaded-item"
                     >
                         <img :src="image.url" alt="фотка">
-                        <div class="image-filter"></div>
+                        <div class="remove-btn" @click="deleteImage(image.name)">&times;</div>                        
                     </li>                
                 </ul>
               
-                <ul class="before-loaded-list">
+                <ul v-if="previewList.length" class="before-loaded-list">
                     <li
                         v-for="image in previewList" 
                         :key="image.url"
@@ -43,7 +43,6 @@
                         <div class="progress">
                             <div class="progress-bar"></div>
                         </div>
-
                         <span>{{ image.name }}</span>
                     </li>
                 </ul>
@@ -58,6 +57,7 @@ export default {
     name: 'Home',
     data() {
         return {
+            files: [],
             previewList: [],
         }
     },
@@ -69,11 +69,18 @@ export default {
             return this.$store.getters.postImageList
         }
     },
+    watch: {
+        postImageList: function () {
+            if (this.postImageList.length === this.files.length) {
+                this.previewList = []
+                this.files = []                 
+            }
+        }
+    },  
     methods: {
         readFiles(event) {
-            this.files = []
-            this.previewList = []  
-
+            this.files = [] 
+            this.previewList = []
             this.files = Array.from(event.target.files)      
 
             this.files.forEach(file => {
@@ -92,13 +99,14 @@ export default {
                 }
                 reader.readAsDataURL(file)
             })
-
         },
         async uploadFiles() {
             await this.$store.dispatch('uploadImages', this.files)
-            if (this.postImageList.length === this.files.length) {
-                this.previewList = []
-            }
+        },
+        async deleteImage(name) {
+            await this.$store.dispatch('deleteImage', name)
+            const imageList = this.postImageList.filter(file => file.name !== name)
+            this.$store.commit('UPDATE_POST_IMAGE_LIST', imageList)
         }
     }
 }
@@ -142,7 +150,7 @@ export default {
     flex-wrap: wrap;
 }
 .loaded-item {
-    position: relative;
+    position: relative;  
     border: 1px solid grey;
     width: 100px;
     height: 100px;
@@ -150,16 +158,21 @@ export default {
     margin-bottom: 8px;
     overflow: hidden;
 }
-.loaded-item img {
-    height: 100%;
-}
-.image-filter {
+.remove-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;    
     position: absolute;
-    left: 0;
+    right: 0;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.7);
-    width: 100px;
-    height: 100px;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 20px;
+    height: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+.loaded-item img {  
+    height: 100%;
 }
 
 
