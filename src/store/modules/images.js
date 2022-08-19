@@ -21,7 +21,7 @@ export default {
         },
     },
     actions: {        
-        uploadImages({commit}, files) {
+        uploadImages({getters, commit}, files) {
             let imageList = []
             const previewBlock = document.querySelector('.before-loaded-list')
             const storage = getStorage()
@@ -48,7 +48,9 @@ export default {
                         imageList.push(image)
 
                         if (imageList.length === files.length) {
-                            commit('UPDATE_POST_IMAGE_LIST', imageList)
+                            const oldImageList = getters.postImageList
+                            const newImageList = [...oldImageList, ...imageList]
+                            commit('UPDATE_POST_IMAGE_LIST', newImageList)
                         }
                     })                   
                 }) 

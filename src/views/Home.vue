@@ -15,7 +15,7 @@
                 >
                 <button 
                     class="upload"
-                    @click="uploadFiles"
+                    @click="uploadImages"
                 >
                     Загрузить
                 </button>
@@ -69,11 +69,17 @@ export default {
             return this.$store.getters.postImageList
         }
     },
-    watch: {
-        postImageList: function () {
+    watchEffect: {
+        postImageList() {
             if (this.postImageList.length === this.files.length) {
                 this.previewList = []
                 this.files = []                 
+            }
+        },
+        previewList(oldVal, newVal) {
+            console.log(oldVal.length + ' and ' + newVal.length)
+            if (this.previewList.length === this.files.length) {
+                this.uploadImages()                
             }
         }
     },  
@@ -99,8 +105,10 @@ export default {
                 }
                 reader.readAsDataURL(file)
             })
+
         },
-        async uploadFiles() {
+
+        async uploadImages() {
             await this.$store.dispatch('uploadImages', this.files)
         },
         async deleteImage(name) {
@@ -194,6 +202,7 @@ export default {
 .progress-bar {
     background-color: rgb(18, 63, 161);
     width: 0;
+    transition: width .22s;    
     height: 100%;
     color: white;
 }
