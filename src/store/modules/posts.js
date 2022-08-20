@@ -74,14 +74,14 @@ export default {
             });
         },    
  
-        async savePost({dispatch}, post) { 
-
+        async savePost({commit, dispatch}, post) { 
+            commit('SET_PROCESSING', true);
             const postId = Date.now();
             const db = getDatabase();
 
             await set(ref(db, `posts/${postId}`), post);
             dispatch('getPostList');   
-            
+            commit('SET_PROCESSING', false);            
         },
         
         async updatePost({commit}, post) {

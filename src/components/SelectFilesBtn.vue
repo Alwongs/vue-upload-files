@@ -1,5 +1,5 @@
 <template>
-    <div class="btn-block">
+    <div class="btn-upload-block">
         <button 
             class="btn trigger-btn" 
             @click.prevent="triggerUpload"
@@ -34,17 +34,9 @@ export default {
 
 <style lang="scss" scoped>
 
-.btn-block {
+.btn-upload-block {
     padding: 16px 0; 
     margin-bottom: 16px;
 }
-.btn {
-    background-color: rgb(234, 242, 255);
-    border: none;
-    border-radius: 4px;
-    box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.521);
-    height: 40px;
-    width: 120px;
-    cursor: pointer;
-}
+
 </style>

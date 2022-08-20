@@ -1,5 +1,5 @@
 <template>
-    <div class="preview-block">               
+    <div class="preview">               
         <ul v-if="postImageList" class="loaded-list">
             <li 
                 v-for="image in postImageList" 
@@ -67,6 +67,7 @@ export default {
             this.$store.commit('UPDATE_POST_IMAGE_LIST', imageList)
             this.removingImageName = ''
         },
+        
         deleteAllImages() {
             for (let image of this.postImageList) {
                 this.removingImageName = image.name
@@ -80,7 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 
-.preview-block {
+.preview {
     border: 2px solid rgb(22, 42, 173);
     min-height: 100px;
     padding: 8px;
