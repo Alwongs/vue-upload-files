@@ -50,7 +50,10 @@ export default {
                         if (imageList.length === files.length) {
                             const oldImageList = getters.postImageList
                             const newImageList = [...oldImageList, ...imageList]
-                            commit('UPDATE_POST_IMAGE_LIST', newImageList)
+
+                            setTimeout(() => {
+                                commit('UPDATE_POST_IMAGE_LIST', newImageList)
+                            }, 500)                          
                         }
                     })                   
                 }) 
