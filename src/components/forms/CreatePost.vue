@@ -1,32 +1,34 @@
 <template>
-    <div class="home">
-        <div class="container">
-            <header class="header">
-                <h1 class="header__title">Загрузка файлов</h1>
-            </header>
+    <div class="create-post">
+        <header class="header">
+            <h1 class="header__title">Загрузка файлов</h1>
+        </header>
 
-            <form action="#" class="form">
-                <div class="input-block">
-                    <input v-model="postType" type="text" placeholder="тип поста">
-                </div>
-                <div class="input-block">
-                    <input v-model="eventType" type="text" placeholder="тип события">
-                </div>
-                <div class="input-block">
-                    <input v-model="title" type="text" placeholder="заголовок">
-                </div>
-                <div class="input-block">
-                    <textarea v-model="text" name="" id="" cols="30" rows="10" placeholder="введите текст"></textarea>
-                </div>
-            </form>
-
-            <select-files-btn @onReadFiles="readFiles" />
-            <images-upload class="image-block" :previewList="previewList"/>
-
-            <h1 v-if="getProcessing">Loading...</h1>
-            <div class="btn-block">
-                <button class="btn btn-submit" type="submit" @click.prevent="savePost">Сохранить</button>
+        <form action="#" class="form">
+            <div class="input-block">
+                <input v-model="postType" type="text" placeholder="тип поста">
             </div>
+            <div class="input-block">
+                <input v-model="eventType" type="text" placeholder="тип события">
+            </div>
+            <div class="input-block">
+                <input v-model="title" type="text" placeholder="заголовок">
+            </div>
+            <div class="input-block">
+                <textarea v-model="text" name="" id="" cols="30" rows="10" placeholder="введите текст"></textarea>
+            </div>
+        </form>
+
+        <select-files-btn @onReadFiles="readFiles" />
+        <images-upload 
+            :previewList="previewList"
+            class="image-block" 
+        />
+
+        <h1 v-if="getProcessing">Loading...</h1>
+        <div class="btn-block">
+            <button class="btn mr-16" @click="$emit('closeForm')">Закрыть</button>
+            <button class="btn btn-submit" type="submit" @click.prevent="savePost">Сохранить</button>
         </div>
     </div>
 </template>
@@ -37,7 +39,7 @@ import ImagesUpload from '@/components/ImagesUpload.vue'
 import uploadFilesMixin from '@/mixins/uploadFiles.mixin.js'
 
 export default {
-    name: 'Home',
+    name: 'CreatePost',
     components: { 
         SelectFilesBtn, 
         ImagesUpload 
@@ -86,11 +88,13 @@ export default {
 
 <style lang="scss" scoped>
 
-.container {
+.create-post {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     background-color: rgb(173, 196, 169);
-    width: 1000px;
-    height: 100vh;
-    margin: 0 auto;
     padding: 0 32px;
     @media (min-width: $desktop-min) and (max-width: $desktop-max) {
         width: 900px;  

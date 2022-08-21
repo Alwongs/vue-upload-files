@@ -1,3 +1,5 @@
+import getFileExt from '@/functions/getFileExt.js'
+
 import { 
     getStorage, 
     ref as stRef, 
@@ -27,7 +29,12 @@ export default {
             const storage = getStorage()
 
             files.forEach((file, index) => {
-                const storageRef = stRef(storage, `images-test/${file.name}`)
+
+                const ext = getFileExt(file)
+                const name =  (Math.random()*1e32).toString(36)
+                const newFileName = name + ext                
+
+                const storageRef = stRef(storage, `images-test/${newFileName}`)
                 const uploadTask = uploadBytesResumable(storageRef, file)
                 const progressBar = previewBlock.querySelectorAll('.progress-bar')[index]     
 
@@ -41,7 +48,7 @@ export default {
                 }, () => {
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         const image = {
-                            name: file.name,
+                            name: newFileName,
                             size: file.size,
                             url: downloadURL
                         }
@@ -51,7 +58,7 @@ export default {
                             const oldImageList = getters.postImageList
                             const newImageList = [...oldImageList, ...imageList]
 
-                            setTimeout(() => {
+                            setTimeout(() => {                                
                                 commit('UPDATE_POST_IMAGE_LIST', newImageList)
                             }, 500)                          
                         }
@@ -71,7 +78,6 @@ export default {
 
               console.log(error)
             }); 
-
         }
     }  
 }

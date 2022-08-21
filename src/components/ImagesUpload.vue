@@ -28,6 +28,7 @@
                 <span>{{ image.name }}</span>
             </li>
         </ul>
+        
         <a 
             v-if="postImageList.length" 
             href="#" 
@@ -40,11 +41,12 @@
 </template>
 
 <script>
-import bitesToSize from '@/funcs/bitesToSize.js'
+import bitesToSize from '@/functions/bitesToSize.js'
+
 
 export default {
     name: 'ImagesUpload',
-    props: ['previewList', ''],
+    props: ['previewList'],
     data() {
         return {
             removingImageName: '',
@@ -59,7 +61,6 @@ export default {
         convertSize(size) {
             return bitesToSize(size)
         },        
-
         async deleteImage(name) {
             this.removingImageName = name
             await this.$store.dispatch('deleteImage', name)
@@ -67,7 +68,6 @@ export default {
             this.$store.commit('UPDATE_POST_IMAGE_LIST', imageList)
             this.removingImageName = ''
         },
-        
         deleteAllImages() {
             for (let image of this.postImageList) {
                 this.removingImageName = image.name

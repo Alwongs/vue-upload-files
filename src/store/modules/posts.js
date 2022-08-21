@@ -1,5 +1,5 @@
 import { getDatabase, set, ref, child, get, update, remove } from "firebase/database"
-import sortList from '../../funcs/sort.js'
+import sortList from '../../functions/sort.js'
 
 export default {
 
@@ -28,6 +28,7 @@ export default {
     },
     actions: {
         async removePost({commit, dispatch}, id) {
+            
             const postId = id;
             const db = getDatabase();
             commit('SET_PROCESSING', true);

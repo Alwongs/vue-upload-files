@@ -29,6 +29,7 @@ export default {
     },    
     methods: {
         readFiles(event) {
+
             this.files = [] 
             this.previewList = []
             this.files = Array.from(event.target.files)   
@@ -36,7 +37,6 @@ export default {
                 alert('Не больше 2 файлов!')
                 return
             }   
-
             this.files.forEach(file => {
                 if (!file.type.match('image')) {
                     return
@@ -54,8 +54,8 @@ export default {
                 reader.readAsDataURL(file)
             })
         },
-        uploadImages() {
+        uploadImages() {           
             this.$store.dispatch('uploadImages', this.files)
-        },        
+        },      
     }
 }
